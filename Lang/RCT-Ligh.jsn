@@ -1,0 +1,18 @@
+{
+  "default":"en",
+  "en":{
+    "appName":"RCT Lights",
+    "labelCom":"--- Common Settings",
+    "labelPos1":"--- Lights Position 1",
+    "labelPos2":"--- Lights Position 2",
+    "labelPos3":"--- Lights Position 3",
+    "labelswM":"Lights Master Switch",
+	"labelOffVal":"Lights OFF Value",
+    "labelsw1":"Switch 1",
+    "labelsw2":"Switch 2",
+    "labelsw3":"Switch 3",
+    "labelChan":"Channel Value",
+    "labelCtrlLong":"Light Control",
+    "labelCtrlShort":"LGT"
+  }
+}
