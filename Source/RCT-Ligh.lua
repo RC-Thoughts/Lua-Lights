@@ -16,7 +16,7 @@
 -- Locals for the application
 local swM, sw1, sw2, sw3, sw4, sw5, sw6, sw7, sw8, sw9
 local swMOn, sw1On, sw2On, sw3On, sw4On, sw5On, sw6On, sw7On, sw8On, sw9On
-local channelDefault, channelValue1, channelValue2, channelValue3
+local channelDefault, channelDefaultOn, channelValue1, channelValue2, channelValue3
 ----------------------------------------------------------------------
 -- Read translation-file
 local function setLanguage()
@@ -113,6 +113,12 @@ local function channelDefaultChanged(value)
 	channelDefault = value
 	pSave("channelDefault", value)
 end
+
+local function channelDefaultOnChanged(value)
+    local pSave = system.pSave
+	channelDefaultOn = value
+	pSave("channelDefaultOn", value)
+end
 ----------------------------------------------------------------------
 -- Let's draw the form! Wheeeee!
 local function initForm()
@@ -129,6 +135,10 @@ local function initForm()
     addRow(2)
     addLabel({label=trans33.labelswM, width=220})
     addInputbox(swM, true, swMChanged)
+	
+	addRow(2)
+    addLabel({label=trans33.labelOnVal, width=220})
+    addIntbox(channelDefaultOn, -125, 125, 0, 0, 1, channelDefaultOnChanged)
 
     addRow(2)
     addLabel({label=trans33.labelOffVal, width=220})
@@ -210,9 +220,9 @@ local function loop()
     if (sw8) then sw8On = system.getInputsVal(sw8) else sw8On = 2 end
     if (sw9) then sw9On = system.getInputsVal(sw9) else sw9On = 2 end
 
-    -- Position 1
     if(swMOn == 1 or sw1On == 2) then
         if(sw1On == 1 and (sw2On == 1 or sw2On == 2) and (sw3On == 1 or sw3On == 2)) then
+			-- Position 1
             system.setControl(1, channelValue1/100, 0, 0)
             -- Position 2
             elseif(sw4On == 1 and (sw5On == 1 or sw5On == 2) and (sw6On == 1 or sw6On == 2)) then
@@ -221,7 +231,7 @@ local function loop()
             elseif(sw7On == 1 and (sw8On == 1 or sw8On == 2) and (sw9On == 1 or sw9On == 2)) then
                 system.setControl(1, channelValue3/100, 0, 0)
             else
-            system.setControl(1, channelDefault/100, 0, 0)
+            system.setControl(1, channelDefaultOn/100, 0, 0)
         end
         else
         system.setControl(1, channelDefault/100, 0, 0)
@@ -246,11 +256,12 @@ local function init()
     channelValue2 = pLoad("channelValue2", 0)
     channelValue3 = pLoad("channelValue3", 0)
     channelDefault = pLoad("channelDefault", 0)
+    channelDefaultOn = pLoad("channelDefaultOn", 0)
     registerControl(1, trans33.labelCtrlLong, trans33.labelCtrlShort)
     registerForm(1,MENU_FINE,trans33.appName,initForm,keyPressed);
     collectgarbage()
 end
 ----------------------------------------------------------------------
-lightsVersion = "1.0"
+lightsVersion = "1.1"
 setLanguage()
 return {init=init, loop=loop, author="RC-Thoughts", version=lightsVersion, name=trans33.appName}
